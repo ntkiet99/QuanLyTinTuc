@@ -1,0 +1,91 @@
+﻿@model QuanLyTinTuc.Models.TinTuc
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<header class="page-title-bar">
+    <div class="d-md-flex align-items-md-start">
+        <h1 class="page-title mr-sm-auto"> Thông tin </h1>
+        <div class="btn-toolbar">
+       @*     <button type="button" class="btn btn-light" onclick="Popup('@Url.Action("AddOrUpdate","Home")')"><i class="oi oi-plus"></i> <span class="ml-1">Thêm</span></button>*@
+        </div>
+    </div>
+</header>
+<div class="page-section">
+    <div class="card card-fluid">
+        <div class="card-body">
+            @using (@Html.BeginForm("AddOrUpdate", "Home", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(model => model.Id)
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">̀Tiêu đề</label>
+                    @Html.EditorFor(model => model.TieuDe, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Mô tả</label>
+                    @Html.TextAreaFor(model => model.MoTa, new { @rows = "3", @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Nội dung</label>
+                    @Html.TextAreaFor(model => model.NoiDung, new { @id = "Content", style = "height: 200px", @class = "form-control", placeholder = "Nội dung bài viết" })
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="recipient-name" class="col-form-label">Hình ảnh<span class="text-danger"> 750x500</span></label>
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.HinhAnh, new { @id = "fieldID", @class = "form-control path_file", placeholder = "Hình ảnh", required = "required" })
+                        @Html.ValidationMessageFor(x => x.HinhAnh, "", new { @class = "text-danger" })
+                        <div class="input-group-append btn-upfle">
+                            <a data-toggle="modal" data-target="#myModal1" class="btn btn-dark " style="color: white">
+                                <i class="fa fa-upload" style="color: white"></i>
+                                Browse
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group text-right mb-0">
+                    <button class="btn btn-primary" type="submit">Lưu</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary">Đóng</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Quản lý tệp tin</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <iframe src="/filemanager/dialog.php?type=1&fldr=&field_id=fieldID" frameborder="0" style="overflow:hidden; min-height:600px; height:100%;width:100%" height="100%" width="100%"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    tinyMCE.init({
+        selector: '#Content',
+        height: 300,
+        entity_encoding: "raw",
+        relative_urls: false,
+
+        inline_styles: true, image_advtab: true,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code colorpicker textcolor responsivefilemanager'
+        ],
+        toolbar: 'insertfile undo redo | styleselect | bold italic | forecolor | backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | link  image fullscreen | responsivefilemanager |',
+        external_filemanager_path: "/filemanager/",
+        external_plugins: { "filemanager": "/filemanager/plugin.min.js" },
+        filemanager_title: "Responsive File Manager",
+        filemanager_access_key: 'f970ce5bc016b5c5ca08e2e39c2cc937&foldr=',
+
+    });
+</script>

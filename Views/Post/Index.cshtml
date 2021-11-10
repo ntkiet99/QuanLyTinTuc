@@ -1,0 +1,44 @@
+﻿@model List<QuanLyTinTuc.Models.TinTuc>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Tuấn Kiệt</title>
+    <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="~/fe/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/fe/css/templatemo-xtra-blog.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <main style="width: 100%;">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <article class="col-12 col-md-3 tm-post">
+                        <a href="/post/detail/@item.Id" class="effect-lily tm-post-link tm-pt-60">
+                            <div class="tm-post-link-inner">
+                                <img src="@item.HinhAnh" alt="Image" class="img-fluid">
+                            </div>
+                            <span class="position-absolute tm-new-badge">Mới</span>
+                            <h2 class="tm-pt-30 tm-color-primary tm-post-title">@item.TieuDe</h2>
+                        </a>
+                        <p class="tm-pt-30">
+                            @item.MoTa
+                        </p>
+                        <div class="d-flex justify-content-between tm-pt-45">
+                            <span class="tm-color-primary">@item.NgayDang.ToString("dd/MM/yyyy hh:mm")</span>
+                        </div>
+                    </article>
+                }
+            </div>
+        </main>
+    </div>
+    <script src="~/fe/js/jquery.min.js"></script>
+    <script src="~/fe/js/templatemo-script.js"></script>
+</body>
+</html>
